@@ -12,20 +12,20 @@ public class UserController {
 
     @GetMapping(path="/")
     public String hello(){
-        return "Hello World";
+        return "Hello sssWorld";
     }
 
     @GetMapping(path="/users")
-    private Iterable<User> getAllUsers(){
+    public Iterable<User> getAllUsers(){
         return repository.findAll();
     }
 
     @GetMapping(path="/add")
-    private String addUser(){
+    public String addUser(){
         User newUser = new User();
         newUser.setName("Flo Rider");
         newUser.setEmail("flo@rider.de");
-        repository.save(newUser);
+        repository.save(newUser); //scheitert
 
         return "Saved";
     }
