@@ -1,9 +1,7 @@
 package com.jolanda.dev.mysqldemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,19 +16,24 @@ public class UserController {
         return "Hello World";
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/users")
     public Iterable<User> getAllUsers() {
         return repository.findAll();
     }
 
-    @GetMapping("/add")
-    public String add() {
-//        User newUser = new User();
-//        newUser.setName("Flo Rider");
-//        newUser.setEmail("flo@rider.de");
-//        repository.save(newUser);
+    // how would a request like this look?
+    // http://localhost:8080/add?name=joelanda&email=joe@landa
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/add")
+    public String add(@RequestParam(value = "name", required = true) String name,
+                      @RequestParam(value = "email", required = true) String email) {
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setEmail(email);
+        repository.save(newUser);
 
-        return "Nothing much happening here ";
+        return "You saved this user: " + name + " ," + email ;
     }
 
     @GetMapping("/users/add")
