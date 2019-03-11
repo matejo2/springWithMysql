@@ -22,10 +22,17 @@ public class UserController {
         return repository.findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/add")
+    public String addUser(@RequestBody User newUser) {
+        repository.save(newUser);
+        return "successful";
+    }
+
     // how would a request like this look?
     // http://localhost:8080/add?name=joelanda&email=joe@landa
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/add")
+    @PostMapping("/add2")
     public String add(@RequestParam(value = "name", required = true) String name,
                       @RequestParam(value = "email", required = true) String email) {
         User newUser = new User();
