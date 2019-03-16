@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class UserController {
+// zuul  hat load balancer
+// eureka services bekannt machen
 
     @Autowired
     private UserRepository repository;
@@ -27,37 +29,6 @@ public class UserController {
     public String addUser(@RequestBody User newUser) {
         repository.save(newUser);
         return "successful";
-    }
-
-    // how would a request like this look?
-    // http://localhost:8080/add?name=joelanda&email=joe@landa
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/add2")
-    public String add(@RequestParam(value = "name", required = true) String name,
-                      @RequestParam(value = "email", required = true) String email) {
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setEmail(email);
-        repository.save(newUser);
-
-        return "You saved this user: " + name + " ," + email ;
-    }
-
-    @GetMapping("/users/add")
-    public String addUser(HttpServletRequest request) {
-
-        // how would a request like this look?
-        // http://localhost:8080/users/add?name=ada
-        //User user = new User();
-        String name = request.getParameter("name");
-        return "what you even trying to add? This name? " + name;
-    }
-
-    @GetMapping("/users/adds")
-    public String anotherAdd(@RequestParam(value = "name", required = false) String name) {
-        // how would a request like this look?
-        // http://localhost:8080/users/adds?name=lovelace
-        return "add this name: " + name;
     }
 }
 
